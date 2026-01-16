@@ -1,6 +1,6 @@
 using Core.Interfaces.Services;
 
-namespace Infrastructure.Services;
+namespace Core.Services.Auth;
 
 public class PasswordService : IPasswordService {
     public string HashPassword(string password) {
@@ -11,4 +11,3 @@ public class PasswordService : IPasswordService {
         return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
     }
 }
-

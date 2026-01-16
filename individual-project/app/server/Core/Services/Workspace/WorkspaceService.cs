@@ -62,7 +62,7 @@ public class WorkspaceService : IWorkspaceService {
         return WorkspaceMapper.ToWorkspaceDto(workspaceWithNav, creatorId);
     }
 
-    public async Task<WorkspaceDto?> GetWorkspaceAsync(int workspaceId, int userId) {
+    public async Task<WorkspaceDto> GetWorkspaceAsync(int workspaceId, int userId) {
         // Check if user has access to workspace
         bool hasAccess = await _userWorkspaceRepository.UserHasAccessAsync(userId, workspaceId);
 

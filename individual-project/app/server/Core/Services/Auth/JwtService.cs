@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Core.Models;
 using Core.Interfaces.Services;
 
-namespace Infrastructure.Services;
+namespace Core.Services.Auth;
 
 public class JwtService : IJwtService {
     private readonly string _secretKey;
@@ -20,7 +20,7 @@ public class JwtService : IJwtService {
         _expirationMinutes = expirationMinutes;
     }
 
-    public string GenerateToken(User user) {
+    public string GenerateToken(Core.Models.User user) {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_secretKey);
 
@@ -68,4 +68,3 @@ public class JwtService : IJwtService {
         return ValidateToken(token) != null;
     }
 }
-
