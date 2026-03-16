@@ -16,7 +16,7 @@ PROCESSED_CSV = "titanic_processed.csv"
 MODEL_FILE = "decision_tree_model.pkl"
 
 # Feature configuration (matches notebook)
-FEATURES = ["pclass", "sex", "Cherbourg"]
+FEATURES = ["pclass", "sex", "title", "Cherbourg"]
 TARGET = "survived"
 
 # Model defaults
