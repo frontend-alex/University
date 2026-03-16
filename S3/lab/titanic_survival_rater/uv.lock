@@ -1029,9 +1029,15 @@ name = "titanic-survival-rater"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+<<<<<<< HEAD
     { name = "ipykernel" },
+=======
+    { name = "jupyter" },
+    { name = "matplotlib" },
+>>>>>>> 5ff5f55b69d7e11dc5bbb87b5e89f23b468fafe3
     { name = "pandas" },
     { name = "scikit-learn" },
+    { name = "seaborn" },
 ]
 
 [package.optional-dependencies]
@@ -1042,10 +1048,13 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "ipykernel", specifier = ">=6.29" },
+    { name = "jupyter", specifier = ">=1.1.1" },
+    { name = "jupyter", marker = "extra == 'dev'", specifier = ">=1.0" },
+    { name = "matplotlib", specifier = ">=3.10.8" },
     { name = "matplotlib", marker = "extra == 'dev'", specifier = ">=3.7" },
     { name = "pandas", specifier = ">=2.0" },
     { name = "scikit-learn", specifier = ">=1.3" },
+    { name = "seaborn", specifier = ">=0.13.2" },
     { name = "seaborn", marker = "extra == 'dev'", specifier = ">=0.12" },
 ]
 provides-extras = ["dev"]
