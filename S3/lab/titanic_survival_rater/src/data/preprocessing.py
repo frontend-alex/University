@@ -29,7 +29,7 @@ def preprocess(df: pd.DataFrame | None = None, save: bool = False) -> pd.DataFra
     df = pd.concat([df, pd.get_dummies(df["embarked"])], axis=1)
     df = df.drop("embarked", axis=1)
 
-    # Reorder: features + target
+    # Reorder ->  features + target
     all_cols = ["pclass", "sex", "age", "Cherbourg", "Queenstown", "Southampton", "survived"]
     df = df[[c for c in all_cols if c in df.columns]]
 

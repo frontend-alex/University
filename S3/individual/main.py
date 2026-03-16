@@ -1,5 +1,5 @@
 def main():
-    print("Hello from linier-regression!")
+    print("Hello from individual!")
 
 
 if __name__ == "__main__":
