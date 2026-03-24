@@ -11,7 +11,7 @@ Usage (standalone)::
     python -m src.data.generate_data --no-save    # return df only, no file
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 import argparse
 from datetime import date, timedelta
