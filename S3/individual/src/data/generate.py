@@ -20,36 +20,22 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from src.utils.config import RAW_DATA_DIR
-
-# ---------------------------------------------------------------------------
-# Constants — change here, nowhere else
-# ---------------------------------------------------------------------------
-
-DEFAULT_N: int = 1500
-DEFAULT_SEED: int = 42
-DEFAULT_FILENAME: str = "barbershop_synthetic_data.csv"
-START_DATE: date = date(2024, 1, 2)
-
-BARBERS: list[str] = ["B01", "B02", "B03", "B04"]
-BARBER_WEIGHTS: list[float] = [0.30, 0.30, 0.25, 0.15]
-
-SERVICE_TYPES: list[str] = ["haircut", "beard_trim", "combo"]
-SERVICE_WEIGHTS: list[float] = [0.50, 0.30, 0.20]
-SERVICE_DURATIONS: dict[str, int] = {"haircut": 30, "beard_trim": 20, "combo": 45}
-
-BOOKING_CHANNELS: list[str] = ["app", "phone", "walk-in"]
-CHANNEL_WEIGHTS: list[float] = [0.45, 0.35, 0.20]
-
-# Per-day additive risk on top of base rate of 0.10
-DAY_RISK: dict[str, float] = {
-    "Monday": 0.08, "Tuesday": 0.02, "Wednesday": 0.01,
-    "Thursday": 0.02, "Friday": 0.04, "Saturday": 0.05, "Sunday": 0.10,
-}
-
-# Per-channel additive risk (negative = protective)
-CHANNEL_RISK: dict[str, float] = {"app": -0.05, "phone": 0.03, "walk-in": 0.08}
-
+from src.utils.config import (
+    DEFAULT_N,
+    DEFAULT_SEED,
+    DEFAULT_FILENAME,
+    START_DATE,
+    BARBERS,
+    BARBER_WEIGHTS,
+    SERVICE_TYPES,
+    SERVICE_WEIGHTS,
+    SERVICE_DURATIONS,
+    BOOKING_CHANNELS,
+    CHANNEL_WEIGHTS,
+    DAY_RISK,
+    CHANNEL_RISK,
+    RAW_DATA_DIR,
+)
 
 # ---------------------------------------------------------------------------
 # Internal helpers
