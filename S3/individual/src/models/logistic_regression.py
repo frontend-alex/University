@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import joblib
-import numpy as np
 import pandas as pd
 
 from sklearn.linear_model import LogisticRegression
@@ -13,25 +12,10 @@ from sklearn.metrics import (
     accuracy_score,
     confusion_matrix,
     f1_score,
-    precision_recall_curve,
     roc_auc_score,
 )
 
 from src.utils.config import FEATURES, TARGET, MODEL_FILE, PROCESSED_DATA_DIR
-
-
-def _find_best_threshold(y_true, y_proba) -> float:
-    """Find the decision threshold that maximises the F1-score for the
-    positive (no-show) class using the precision-recall curve."""
-    precisions, recalls, thresholds = precision_recall_curve(y_true, y_proba)
-
-    f1_scores = np.where(
-        (precisions[:-1] + recalls[:-1]) > 0,
-        2 * precisions[:-1] * recalls[:-1] / (precisions[:-1] + recalls[:-1]),
-        0,
-    )
-    best_idx = np.argmax(f1_scores)
-    return float(thresholds[best_idx])
 
 
 def train_logistic_regression(
@@ -41,22 +25,7 @@ def train_logistic_regression(
     random_state: int = 42,
     save: bool = True,
 ) -> tuple[LogisticRegression, float, str]:
-    """Train a Logistic Regression classifier on preprocessed barbershop data.
-
-    High-priority fixes applied (iteration 2):
-      - class_weight='balanced' to handle class imbalance
-      - Optimal threshold via precision-recall curve (instead of default 0.5)
-      - Recall / F1 / ROC-AUC reported alongside accuracy
-
-    Args:
-        df: Preprocessed DataFrame (all features already encoded / scaled).
-        test_size: Fraction of data reserved for testing.
-        random_state: Seed for reproducible train/test split.
-        save: If True, persist the trained model as a .pkl file.
-
-    Returns:
-        Tuple of (trained model, accuracy, classification report string).
-    """
+    """Train a Logistic Regression classifier on preprocessed barbershop data."""
     # ------------------------------------------------------------------ #
     # 1. Split features / target                                          #
     # ------------------------------------------------------------------ #
@@ -81,11 +50,10 @@ def train_logistic_regression(
     model.fit(X_train, y_train)
 
     # ------------------------------------------------------------------ #
-    # 3. Find optimal threshold via precision-recall curve                #
+    # 3. Predict                                                          #
     # ------------------------------------------------------------------ #
     y_proba = model.predict_proba(X_test)[:, 1]
-    best_threshold = _find_best_threshold(y_test, y_proba)
-    y_pred = (y_proba >= best_threshold).astype(int)
+    y_pred = model.predict(X_test)
 
     # ------------------------------------------------------------------ #
     # 4. Evaluate with recall-focused metrics                             #
@@ -99,7 +67,6 @@ def train_logistic_regression(
     print(f"\n{'='*60}")
     print(f" Logistic Regression - No-Show Prediction (Iteration 2)")
     print(f"{'='*60}")
-    print(f" Threshold:       {best_threshold:.4f}  (optimised for F1)")
     print(f" Accuracy:        {accuracy:.4f}")
     print(f" ROC-AUC:         {roc_auc:.4f}")
     print(f" F1 (No-Show):    {f1_noshow:.4f}")

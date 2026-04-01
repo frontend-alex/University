@@ -16,6 +16,7 @@ PROCESSED_DATA_DIR = DATA_DIR / "processed"
 PROCESSED_CSV = PROCESSED_DATA_DIR / "barbershop_synthetic_data_processed.csv"
 MODEL_FILE = PROCESSED_DATA_DIR / "logistic_regression_model.pkl"
 
+
 # ---------------------------------------------------------------------------
 # Constants —  Default File Names 
 # ---------------------------------------------------------------------------
