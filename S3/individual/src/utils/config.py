@@ -13,8 +13,13 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
 RAW_DATA_DIR = DATA_DIR / "raw"
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
+PREDICTIONS_DIR = DATA_DIR / "predictions"
+
 PROCESSED_CSV = PROCESSED_DATA_DIR / "barbershop_synthetic_data_processed.csv"
-MODEL_FILE = PROCESSED_DATA_DIR / "logistic_regression_model.pkl"
+
+LOGISTIC_REGRESSION_MODEL_FILE = PREDICTIONS_DIR / "logistic_regression_model.pkl"
+RANDOM_FOREST_MODEL_FILE = PREDICTIONS_DIR / "random_forest_model.pkl"
+
 
 
 # ---------------------------------------------------------------------------

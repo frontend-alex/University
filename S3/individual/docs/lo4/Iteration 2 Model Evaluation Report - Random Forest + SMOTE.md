@@ -9,13 +9,11 @@
 | Method | DOT Framework - Lab research (experiment) |
 | Status | Sprint 1 - Algorithm changed and SMOTE added |
 
----
 
 ## 1. Introduction
 
 This report documents Iteration 2 after changing the algorithm from Logistic Regression to Random Forest and adding SMOTE for class imbalance. The objective is to improve minority-class (`No-Show`) detection while keeping the test set untouched.
 
----
 
 ## 2. Changes Applied
 
@@ -26,7 +24,6 @@ This report documents Iteration 2 after changing the algorithm from Logistic Reg
 | Class imbalance | Kept `class_weight='balanced'` | Strengthen minority learning during fit |
 | Metrics | Kept ROC-AUC, F1 (No-Show), confusion matrix | Accuracy alone is misleading for imbalance |
 
----
 
 ## 3. Experiment Setup
 
@@ -40,7 +37,6 @@ This report documents Iteration 2 after changing the algorithm from Logistic Reg
 | Threshold | Default 0.5 (`model.predict`) |
 | Features | 10 (same preprocessing as baseline) |
 
----
 
 ## 4. Results
 
@@ -71,7 +67,6 @@ This report documents Iteration 2 after changing the algorithm from Logistic Reg
 | No-Show Recall | 0.1746 |
 | No-Show Precision | 0.2619 |
 
----
 
 ## 5. Comparison
 
@@ -96,7 +91,6 @@ This report documents Iteration 2 after changing the algorithm from Logistic Reg
 | True Positives | 2 | **11** | +9 |
 | False Positives | 3 | 31 | +28 |
 
----
 
 ## 6. Analysis
 
@@ -105,7 +99,6 @@ This report documents Iteration 2 after changing the algorithm from Logistic Reg
 - ROC-AUC is still weak (`0.54`), indicating limited discrimination.
 - Trade-off is clear: higher no-show capture, but more false positives.
 
----
 
 ## 7. Next Steps
 
@@ -114,7 +107,6 @@ This report documents Iteration 2 after changing the algorithm from Logistic Reg
 3. Compare SMOTE variants (`BorderlineSMOTE`, `SMOTEENN`) and `BalancedRandomForestClassifier`.
 4. Add stronger behavior features (e.g., no-show ratio, recent attendance patterns).
 
----
 
 ## 8. Summary
 

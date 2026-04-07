@@ -35,20 +35,6 @@ def load_raw(
     *,
     required_columns: list[str] | None = None,
 ) -> pd.DataFrame:
-    """Load the raw Titanic CSV.
-
-    Args:
-        path: Optional override path. Falls back to RAW_DATA_DIR / RAW_CSV.
-        required_columns: Optional list of column names that must be present
-            in the loaded DataFrame. Raises ValueError if any are missing.
-
-    Returns:
-        Raw DataFrame.
-
-    Raises:
-        FileNotFoundError: If the CSV does not exist at the resolved path.
-        ValueError: If required columns are missing from the loaded file.
-    """
     filepath = _resolve_path(path, RAW_DATA_DIR / RAW_CSV)
     _validate_csv(filepath)
 
@@ -69,20 +55,6 @@ def load_processed(
     *,
     required_columns: list[str] | None = None,
 ) -> pd.DataFrame:
-    """Load the preprocessed Titanic CSV.
-
-    Args:
-        path: Optional override path. Falls back to PROCESSED_DATA_DIR / PROCESSED_CSV.
-        required_columns: Optional list of column names that must be present.
-
-    Returns:
-        Preprocessed DataFrame.
-
-    Raises:
-        FileNotFoundError: If the processed CSV does not exist yet.
-            Run preprocessing first (e.g. python main.py --train).
-        ValueError: If required columns are missing from the loaded file.
-    """
     filepath = _resolve_path(path, PROCESSED_DATA_DIR / PROCESSED_CSV)
 
     if not filepath.exists():
@@ -110,16 +82,7 @@ def load(
     *,
     required_columns: list[str] | None = None,
 ) -> pd.DataFrame:
-    """Unified entry point: load raw or processed data.
 
-    Args:
-        processed: If True, load from processed directory. Default False (raw).
-        path: Optional path override.
-        required_columns: Optional columns to validate after loading.
-
-    Returns:
-        DataFrame from the requested stage.
-    """
     if processed:
         return load_processed(path, required_columns=required_columns)
     return load_raw(path, required_columns=required_columns)
