@@ -2,11 +2,14 @@
 
 from pathlib import Path
 from datetime import date
-
+# -------------------------------------------------------------------------
 # Project root (parent of src/)
+# -------------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
+# -------------------------------------------------------------------------
 # Data paths
+# -------------------------------------------------------------------------
 DATA_DIR = PROJECT_ROOT / "data"
 RAW_DATA_DIR = DATA_DIR / "raw"
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
@@ -18,10 +21,15 @@ LOGISTIC_REGRESSION_MODEL_FILE = PREDICTIONS_DIR / "logistic_regression_model.pk
 RANDOM_FOREST_MODEL_FILE = PREDICTIONS_DIR / "random_forest_model.pkl"
 
 
+
+# ---------------------------------------------------------------------------
 # Constants —  Default File Names 
+# ---------------------------------------------------------------------------
 RAW_CSV = "barbershop_synthetic_data.csv"
 
+# ---------------------------------------------------------------------------
 # Constants —  Generate Synthetic Data 
+# ---------------------------------------------------------------------------
 DEFAULT_N: int = 1500
 DEFAULT_SEED: int = 42
 DEFAULT_FILENAME: str = "barbershop_synthetic_data.csv"
@@ -47,7 +55,9 @@ DAY_RISK: dict[str, float] = {
 CHANNEL_RISK: dict[str, float] = {"app": -0.05, "phone": 0.03, "walk-in": 0.08}
 
 
+# ---------------------------------------------------------------------------
 # Constants —  Model Features 
+# ---------------------------------------------------------------------------
 FEATURES = [
     "day_of_week", 
     "hour_of_day", 
@@ -62,7 +72,9 @@ FEATURES = [
 ]
 TARGET = "no_show"
 
+# ---------------------------------------------------------------------------
 # Constants —  Preprocessing 
+# ---------------------------------------------------------------------------
 DAY_ORDER = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-CHANNEL_ORDER = ["app", "phone", "walk-in"]   # low -> high risk (from domain analysis)
+CHANNEL_ORDER = ["app", "phone", "walk-in"]   # low → high risk (from domain analysis)
 SERVICE_ORDER = ["beard_trim", "haircut", "combo"]

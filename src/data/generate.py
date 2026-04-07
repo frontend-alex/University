@@ -143,10 +143,7 @@ def generate(
         )
         for i in range(n)
     ]
-
-    # no_show = np.array([rng.binomial(1, p) for p in probs])
-    no_show = (np.array(probs) >= 0.18).astype(int)
-
+    no_show = np.array([rng.binomial(1, p) for p in probs])
 
     df = pd.DataFrame({
         "appointment_id": [f"APT-{str(i + 1).zfill(4)}" for i in range(n)],
