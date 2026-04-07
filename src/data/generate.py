@@ -35,6 +35,7 @@ from src.utils.config import (
     DAY_RISK,
     CHANNEL_RISK,
     RAW_DATA_DIR,
+    DECISION_THRESHOLD
 )
 
 # ---------------------------------------------------------------------------
@@ -143,7 +144,15 @@ def generate(
         )
         for i in range(n)
     ]
-    no_show = np.array([rng.binomial(1, p) for p in probs])
+
+    # ! The stakeholder decides the threshold, e.g. 0.18 means:
+    # ! anyone with risk >= 18% is a No-Show, below 18% is a Show
+
+    #! 18% is the decission threshold 
+
+    # no_show = np.array([rng.binomial(1, p) for p in probs]) # ! Even if the prob > 65 | 35 we flip a coin and say no show or show  
+    no_show = (np.array(probs) >= DECISION_THRESHOLD).astype(int) # ! no coin flipping, no luck pure logic, if the prob 18 > No show < 18 = show 
+
 
     df = pd.DataFrame({
         "appointment_id": [f"APT-{str(i + 1).zfill(4)}" for i in range(n)],

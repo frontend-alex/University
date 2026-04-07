@@ -1,11 +1,11 @@
-# from src.data.generate import generate
+from src.data.generate import generate
 from src.data.preprocess import preprocess
 
 from src.models.model import train_random_forest
 
 
 def main():
-    # df = generate(n=1500, seed=42, save=True)
+    df = generate(n=1000, seed=42, save=True)
 
     df = preprocess()
 

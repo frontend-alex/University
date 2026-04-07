@@ -31,6 +31,7 @@ RAW_CSV = "barbershop_synthetic_data.csv"
 # Constants —  Generate Synthetic Data 
 # ---------------------------------------------------------------------------
 DEFAULT_N: int = 1500
+DECISION_THRESHOLD = 0.18
 DEFAULT_SEED: int = 42
 DEFAULT_FILENAME: str = "barbershop_synthetic_data.csv"
 START_DATE: date = date(2024, 1, 2)

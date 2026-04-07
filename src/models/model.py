@@ -1,4 +1,3 @@
-import joblib
 import pandas as pd
 
 from sklearn.ensemble import RandomForestClassifier
@@ -10,8 +9,6 @@ from sklearn.model_selection import (
 
 from src.utils.config import (
     FEATURES,
-    PROCESSED_DATA_DIR,
-    RANDOM_FOREST_MODEL_FILE,
     TARGET
 )
 
@@ -19,7 +16,6 @@ def train_random_forest(
     df: pd.DataFrame,
     test_size: float = 0.2,
     random_state: int = 42,
-    save: bool = True
 
 ) -> tuple[RandomForestClassifier, float, str]:
     "Train Random Forest Model"
@@ -39,29 +35,37 @@ def train_random_forest(
     # * -> they double compencate for the imabalnce making the model overcorrect towards predicting no-shows, which hurts the overral accuracy
 
 
-    param_grid = {
-        "n_estimators"       : [200, 300, 500],  # ? How many trees in the foret -> more -> more stable  
-        "max_depth"         : [None, 10, 20],    # ? How deep each tree grows -> None? -> Fully grown
-        "min_samples_leaf"  : [1, 2, 4],         # ? Minimum rows at a leaf -> Higher -> Less overfiting
-    }
-    
-    grid_search = GridSearchCV(
-        estimator=RandomForestClassifier(
-            class_weight="balanced", 
-            random_state=random_state,
-            n_jobs=1  
-        ),
-        param_grid=param_grid,
-        cv=5,
-        scoring="accuracy",
-        n_jobs=-1,
-        verbose=1
+    # param_grid = {
+    #     "n_estimators"      : [200, 300, 500],  # ? How many trees in the foret -> more -> more stable  
+    #     "max_depth"         : [None, 10, 20],    # ? How deep each tree grows -> None? -> Fully grown
+    #     "min_samples_leaf"  : [1, 2, 4],         # ? Minimum rows at a leaf -> Higher -> Less overfiting
+    # }
+    # 
+    # grid_search = GridSearchCV(
+    #     estimator=RandomForestClassifier(
+    #         class_weight="balanced", 
+    #         random_state=random_state,
+    #         n_jobs=1  
+    #     ),
+    #     param_grid=param_grid,
+    #     cv=5,
+    #     scoring="accuracy",
+    #     n_jobs=-1,
+    #     verbose=1
+    # )
+    # 
+    # grid_search.fit(X_train, y_train)
+    # 
+    # print("Best Params", grid_search.best_params_)
+    # model = grid_search.best_estimator_
+
+    model = RandomForestClassifier(
+        class_weight="balanced", 
+        random_state=random_state,
+        n_estimators=500
     )
 
-    grid_search.fit(X_train, y_train)
-
-    print("Best Params", grid_search.best_params_)
-    model = grid_search.best_estimator_
+    model.fit(X_train, y_train)
 
     y_pred = model.predict(X_test)
     y_proba = model.predict_proba(X_test)[:, 1]
@@ -83,9 +87,5 @@ def train_random_forest(
     print(f"    TN={cm[0][0]}  FP={cm[0][1]}")
     print(f"    FN={cm[1][0]}  TP={cm[1][1]}")
     
-    if save:
-        PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
-        joblib.dump(model, RANDOM_FOREST_MODEL_FILE)
-        print("Model saved ->", RANDOM_FOREST_MODEL_FILE)
 
     return model, accuracy, report
