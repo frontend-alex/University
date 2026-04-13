@@ -44,7 +44,7 @@ def train_random_forest(
     #     ),
     #     param_grid=param_grid,
     #     cv=5,
-    #     scoring="accuracy",
+    #     scoring="f1",
     #     n_jobs=-1,
     #     verbose=1
     # )
@@ -57,7 +57,7 @@ def train_random_forest(
     model = RandomForestClassifier(
         class_weight="balanced", 
         random_state=random_state,
-        n_estimators=200
+        n_estimators=200,
     )
 
     model.fit(X_train, y_train)

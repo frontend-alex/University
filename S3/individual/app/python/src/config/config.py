@@ -56,6 +56,14 @@ FEATURES = [
     "previous_no_shows", 
     "total_previous_visits"
 ]
+# FEATURES = [
+#     "is_returning_customer",
+#     "total_previous_visits",
+#     "reminder_sent",
+#     "booking_channel",
+#     "lead_time_days",
+#     "previous_no_shows",
+# ]
 TARGET = "no_show"
 
 # Constants —  Preprocessing 

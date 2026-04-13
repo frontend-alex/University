@@ -144,46 +144,7 @@ def generate(
         for i in range(n)
     ]
 
-    
-
-    # -------------------------------------------------------------------
-    # Add realistic noise to features (post-probability computation)
-    # Probabilities reflect true underlying risk; features stored in the
-    # DataFrame are the "observed" noisy versions a model would see.
-    # -------------------------------------------------------------------
-
-    # Numeric features: Gaussian jitter → round → clip to valid range
-    hour_of_day = np.clip(
-        np.round(hour_of_day + rng.normal(0, 0.8, size=n)), 9, 18
-    ).astype(int)
-
-    lead_time_days = np.clip(
-        np.round(lead_time_days + rng.normal(0, 1.0, size=n)), 0, 21
-    ).astype(int)
-
-    total_previous_visits = np.clip(
-        np.round(total_previous_visits + rng.normal(0, 1.5, size=n)), 0, None
-    ).astype(int)
-
-    previous_no_shows = np.clip(
-        np.round(previous_no_shows + rng.normal(0, 0.4, size=n)), 0, None
-    ).astype(int)
-
-    # Binary features: flip a small fraction to simulate recording errors
-    flip_prob = 0.03
-    is_returning = np.where(
-        rng.random(n) < flip_prob, 1 - is_returning, is_returning
-    )
-    reminder_sent = np.where(
-        rng.random(n) < flip_prob, 1 - reminder_sent, reminder_sent
-    )
-
-    # -------------------------------------------------------------------
-    # Target: probabilistic sampling (realistic stochasticity)
-    # A high-risk appointment can still show up, and a low-risk one can
-    # still no-show — just like in real life.
-    # -------------------------------------------------------------------
-    no_show = np.array([rng.binomial(1, p) for p in probs])
+    no_show = (np.array(probs) > 0.18).astype(int)
 
 
     df = pd.DataFrame({
