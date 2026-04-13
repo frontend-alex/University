@@ -1,7 +1,7 @@
 import pandas as pd
 
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score, roc_auc_score
 
 from src.config.config import (
@@ -35,7 +35,7 @@ def train_random_forest(
     #     "max_depth"         : [None, 10, 20],    # ? How deep each tree grows -> None? -> Fully grown
     #     "min_samples_leaf"  : [1, 2, 4],         # ? Minimum rows at a leaf -> Higher -> Less overfiting
     # }
-    # 
+    
     # grid_search = GridSearchCV(
     #     estimator=RandomForestClassifier(
     #         class_weight="balanced", 
@@ -48,16 +48,16 @@ def train_random_forest(
     #     n_jobs=-1,
     #     verbose=1
     # )
-    # 
+    
     # grid_search.fit(X_train, y_train)
-    # 
+    
     # print("Best Params", grid_search.best_params_)
     # model = grid_search.best_estimator_
 
     model = RandomForestClassifier(
         class_weight="balanced", 
         random_state=random_state,
-        n_estimators=500
+        n_estimators=200
     )
 
     model.fit(X_train, y_train)
