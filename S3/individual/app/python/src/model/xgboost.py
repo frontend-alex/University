@@ -1,6 +1,3 @@
-import pickle
-from typing import Any
-
 import pandas as pd
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score, roc_auc_score
 from sklearn.model_selection import train_test_split
@@ -8,21 +5,20 @@ from xgboost import XGBClassifier
 
 from src.config.config import (
     FEATURES,
-    MODEL_ARTIFACTS_DIR,
     MODEL_BEST_XGB_PARAMS,
-    MODEL_FILENAME,
+    MODEL_FILENAME_XGBOOST,
     MODEL_THRESHOLD,
     TARGET,
-    MODEL_FILENAME_RANDOMFOREST,
 )
+from src.utils import save_model
 
 
-def train_xgboost_randomized_early_stopping(
+def xgboost_model(
     df: pd.DataFrame,
     test_size: float = 0.2,
     random_state: int = 42,
     save: bool = True,
-    model_filename: str = MODEL_FILENAME,
+    model_filename: str = MODEL_FILENAME_XGBOOST,
 ) -> tuple[XGBClassifier, float, str]:
 
     # Kept function name for compatibility, but trains the fixed best XGBoost model.
@@ -62,21 +58,6 @@ def train_xgboost_randomized_early_stopping(
     print(f"    FN={cm[1][0]}  TP={cm[1][1]}")
 
     if save:
-        MODEL_ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
-        model_path = MODEL_ARTIFACTS_DIR / model_filename
-        bundle: dict[str, Any] = {
-            "model": model,
-            "threshold": MODEL_THRESHOLD,
-            "features": FEATURES,
-            "best_params": MODEL_BEST_XGB_PARAMS,
-            "metrics": {
-                "test_accuracy": float(accuracy),
-                "test_f1": float(f1_noshow),
-                "test_roc_auc": float(roc_auc),
-            },
-        }
-        with model_path.open("wb") as file:
-            pickle.dump(bundle, file)
-        print(f"\nSaved model bundle to: {model_path.resolve()}")
+        save_model(model, model_filename=model_filename)
 
     return model, float(accuracy), report

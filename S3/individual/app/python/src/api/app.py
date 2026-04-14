@@ -85,7 +85,6 @@ def user_probability(user_id: str) -> UserDetail:
     feature_names = bundle["features"]
     feature_frame = pd.DataFrame([patient])[feature_names]
 
-    # Per-feature contributions from XGBoost (last value is bias term).
     booster = model.get_booster()
     contributions_raw = booster.predict(
         xgb.DMatrix(feature_frame, feature_names=feature_names),

@@ -4,23 +4,39 @@ from typing import Any
 
 import pandas as pd
 
-from src.config.config import MODEL_ARTIFACTS_DIR, MODEL_FILENAME
+from src.config.config import (
+    FEATURES,
+    MODEL_ARTIFACTS_DIR,
+    MODEL_FILENAME_XGBOOST,
+    MODEL_THRESHOLD,
+    PROJECT_ROOT,
+)
 
 
-def get_model_artifact_path(model_filename: str = MODEL_FILENAME) -> Path:
-    primary = MODEL_ARTIFACTS_DIR / model_filename
-    notebook_fallback = Path("notebook") / "artifacts" / "models" / model_filename
+def get_model_artifact_path(model_filename: str = MODEL_FILENAME_XGBOOST) -> Path:
+    primary = PROJECT_ROOT / "data" / "models" / model_filename
     if primary.exists():
         return primary
-    if notebook_fallback.exists():
-        return notebook_fallback
+    legacy_fallback = MODEL_ARTIFACTS_DIR / model_filename
+    if legacy_fallback.exists():
+        return legacy_fallback
     return primary
 
 
 def load_model_bundle(model_path: Path | None = None) -> dict[str, Any]:
     artifact_path = model_path or get_model_artifact_path()
     with artifact_path.open("rb") as file:
-        return pickle.load(file)
+        loaded = pickle.load(file)
+
+    # Backward compatible: support both serialized bundle dicts and raw model objects.
+    if isinstance(loaded, dict) and {"model", "features", "threshold"}.issubset(loaded.keys()):
+        return loaded
+
+    return {
+        "model": loaded,
+        "features": FEATURES,
+        "threshold": MODEL_THRESHOLD,
+    }
 
 
 def score_people(bundle: dict[str, Any], rows: pd.DataFrame) -> pd.DataFrame:

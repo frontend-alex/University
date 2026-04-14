@@ -62,11 +62,3 @@ def preprocess(df: pd.DataFrame | None = None, save: bool = True, return_transfo
         return df, {"label_encoder": le, "scaler": scaler}
 
     return df
-
-def preprocess_real(df: pd.DataFrame | None = None, save: bool = True) -> pd.DataFrame:
-    if df is None:
-        df = load_real()
-    
-    
-
-    df = df.copy()

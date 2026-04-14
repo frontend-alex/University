@@ -19,7 +19,7 @@ RAW_DATA_DIR = DATA_DIR / "raw"
 REAL_DATA_DIR = DATA_DIR / "real"
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
 
-MODEL_ARTIFACTS_DIR = PROJECT_ROOT / "artifacts" / "models"
+MODEL_ARTIFACTS_DIR = DATA_DIR / "models"
 
 RAW_CSV = RAW_DATA_DIR / "barbershop_synthetic_data.csv"
 PROCESSED_CSV = PROCESSED_DATA_DIR / "barbershop_synthetic_data_processed.csv"
@@ -192,8 +192,8 @@ XGB_PARAM_GRID = {
 # 6. PRODUCTION MODEL CONFIG
 # =========================================================
 
-MODEL_FILENAME = "xgb_randomized_early_stopping.pkl"
-MODEL_FILENAME_RANDOMFOREST = "rf.pkl"
+MODEL_FILENAME_XGBOOST = "xgboost.pkl"
+MODEL_FILENAME_RANDOM_FOREST = "rf.pkl"
 
 # Threshold tuned for recall/F1 tradeoff
 MODEL_THRESHOLD = 0.49183673469387756

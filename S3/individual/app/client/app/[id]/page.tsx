@@ -47,7 +47,7 @@ export default async function UserPage({ params }: UserPageProps) {
         <h1 className="text-2xl font-semibold">Booking {user.id}</h1>
         <p className="mt-1 text-sm text-muted-foreground">No-show prediction details</p>
 
-        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="rounded-md border p-4">
             <p className="text-xs text-muted-foreground">Probability</p>
             <p className="mt-1 text-xl font-semibold">{probabilityPercent}%</p>
@@ -55,10 +55,6 @@ export default async function UserPage({ params }: UserPageProps) {
           <div className="rounded-md border p-4">
             <p className="text-xs text-muted-foreground">Prediction</p>
             <p className="mt-1 text-xl font-semibold">{riskLabel}</p>
-          </div>
-          <div className="rounded-md border p-4">
-            <p className="text-xs text-muted-foreground">Threshold</p>
-            <p className="mt-1 text-xl font-semibold">{user.threshold.toFixed(3)}</p>
           </div>
         </div>
 
