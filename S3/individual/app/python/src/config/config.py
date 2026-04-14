@@ -45,16 +45,16 @@ CHANNEL_RISK: dict[str, float] = {"app": -0.05, "phone": 0.03, "walk-in": 0.08}
 
 # Constants ->  Model Features 
 FEATURES = [
-    "day_of_week", 
-    "hour_of_day", 
+    "day_of_week", ##
+    "hour_of_day", ##
     "lead_time_days", 
     "is_returning_customer", 
     "booking_channel", 
-    "service_type", 
+    "service_type", ##
     "reminder_sent", 
-    "barber_id", 
+    "barber_id", ##
     "previous_no_shows", 
-    "total_previous_visits"
+    "total_previous_visits" 
 ]
 # FEATURES = [
 #     "is_returning_customer",
