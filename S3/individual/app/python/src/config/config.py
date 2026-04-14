@@ -12,6 +12,7 @@ DATA_DIR = PROJECT_ROOT / "data"
 RAW_DATA_DIR = DATA_DIR / "raw"
 REAL_DATA_DIR = DATA_DIR / "real"
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
+MODEL_ARTIFACTS_DIR = PROJECT_ROOT / "artifacts" / "models"
 
 RAW_CSV = RAW_DATA_DIR / "barbershop_synthetic_data.csv"
 PROCESSED_CSV = PROCESSED_DATA_DIR / "barbershop_synthetic_data_processed.csv"
