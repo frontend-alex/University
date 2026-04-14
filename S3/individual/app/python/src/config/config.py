@@ -2,6 +2,7 @@
 
 from pathlib import Path
 from datetime import date
+from scipy.stats import randint, uniform
 
 
 # Project root (parent of src/)
@@ -12,6 +13,7 @@ DATA_DIR = PROJECT_ROOT / "data"
 RAW_DATA_DIR = DATA_DIR / "raw"
 REAL_DATA_DIR = DATA_DIR / "real"
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
+MODEL_ARTIFACTS_DIR = PROJECT_ROOT / "artifacts" / "models"
 
 RAW_CSV = RAW_DATA_DIR / "barbershop_synthetic_data.csv"
 PROCESSED_CSV = PROCESSED_DATA_DIR / "barbershop_synthetic_data_processed.csv"
@@ -56,15 +58,71 @@ FEATURES = [
     "previous_no_shows", 
     "total_previous_visits" 
 ]
-# FEATURES = [
-#     "is_returning_customer",
-#     "total_previous_visits",
-#     "reminder_sent",
-#     "booking_channel",
-#     "lead_time_days",
-#     "previous_no_shows",
-# ]
+
 TARGET = "no_show"
+
+# Experiment parameter sets (used by notebook/experiment.ipynb)
+RANDOM_FOREST_PARAM_SETS: list[dict] = [
+    {"n_estimators": 200, "max_depth": None, "min_samples_leaf": 1, "class_weight": "balanced"},
+    {"n_estimators": 300, "max_depth": 10, "min_samples_leaf": 2, "class_weight": "balanced"},
+    {"n_estimators": 500, "max_depth": 20, "min_samples_leaf": 4, "class_weight": "balanced"},
+]
+
+RF_PARAM_DISTRIBUTIONS = {
+    "n_estimators": randint(200, 1200),          # more trees = stability
+    "max_depth": [None] + list(range(5, 40)),    # allow both shallow & deep
+    "min_samples_split": randint(2, 20),
+    "min_samples_leaf": randint(1, 10),
+    "max_features": ["sqrt", "log2", None, 0.3, 0.5, 0.7],
+    "bootstrap": [True, False],
+    "class_weight": ["balanced", "balanced_subsample", None],
+}
+
+RF_PARAM_GRID = {
+    "n_estimators": [200, 400, 800],
+    "max_depth": [None, 8, 16],
+    "min_samples_split": [2, 8],
+    "min_samples_leaf": [1, 3],
+    "max_features": ["sqrt", 0.5],
+    "bootstrap": [True, False],
+    "class_weight": ["balanced", None],
+}
+
+
+XGB_PARAM_DISTRIBUTIONS = {
+    "n_estimators": randint(300, 1500),
+    "max_depth": randint(3, 10),
+    "learning_rate": uniform(0.01, 0.2),  # 0.01 → 0.21
+    "subsample": uniform(0.6, 0.4),       # 0.6 → 1.0
+    "colsample_bytree": uniform(0.6, 0.4),
+    
+    # Regularization (CRITICAL)
+    "gamma": uniform(0, 5),
+    "min_child_weight": randint(1, 10),
+    "reg_alpha": uniform(0, 1),
+    "reg_lambda": uniform(1, 5),
+
+    # Imbalance handling
+    "scale_pos_weight": uniform(0.5, 10),
+
+    "objective": ["binary:logistic"],
+    "eval_metric": ["logloss"],
+}
+
+XGB_PARAM_GRID = {
+    "n_estimators": [300, 800, 1200],
+    "max_depth": [3, 5, 7],
+    "learning_rate": [0.03, 0.07, 0.12],
+    "subsample": [0.7, 0.9, 1.0],
+    "colsample_bytree": [0.7, 0.9, 1.0],
+    "gamma": [0, 1, 3],
+    "min_child_weight": [1, 4, 8],
+    "reg_alpha": [0, 0.3, 0.8],
+    "reg_lambda": [1, 3, 6],
+    "scale_pos_weight": [1, 3, 6],
+    "objective": ["binary:logistic"],
+    "eval_metric": ["logloss"],
+}
 
 # Constants —  Preprocessing 
 DAY_ORDER = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
