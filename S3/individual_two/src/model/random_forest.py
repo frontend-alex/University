@@ -1,7 +1,7 @@
 import pandas as pd
 
-from config.config import (SAVED_MODEL_RF, FEATURES, TARGET)
-from utils.file import save_model
+from src.config.config import (SAVED_MODEL_RF, FEATURES, TARGET)
+from src.utils.file import save_model
 
 from sklearn.ensemble import RandomForestClassifier
 
