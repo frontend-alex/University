@@ -1,0 +1,3 @@
+[submodule "S3/group/Scoped"]
+	path = S3/group/Scoped
+	url = git@github.com:frontend-alex/Scoped.git
