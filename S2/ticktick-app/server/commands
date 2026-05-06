@@ -1,0 +1,2 @@
+C:\RandomStuff\stripe\stripe.exe listen --forward-to localhost:3000/api/stripe/webhook
+C:\stripe\stripe.exe listen --forward-to localhost:3000/api/stripe/webhook

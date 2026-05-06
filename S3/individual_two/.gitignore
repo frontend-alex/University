@@ -1,0 +1,12 @@
+__pycache__/
+*.log
+*.pkl
+*.json
+*.yaml
+*.yml
+*.txt
+*.md
+*.html
+*.css
+*.js
+*.pyc
