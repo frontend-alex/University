@@ -18,3 +18,9 @@ def save_model(model: object, name: str | Path) -> None:
     path = SAVED_MODELS_DIR / Path(name)
     with open(path, "wb") as f:
         pickle.dump(model, f)
+
+
+def save_csv(df: pd.DataFrame, path: str | Path) -> None:
+    filepath = Path(path)
+    filepath.parent.mkdir(parents=True, exist_ok=True)
+    df.to_csv(filepath, index=False)
