@@ -2,7 +2,7 @@ import pickle
 
 from pathlib import Path
 
-from config.config import SAVED_MODELS_DIR
+from src.config.config import SAVED_MODELS_DIR
 
 def resolve_path(override: str | Path | None, default: Path) -> Path:
     return Path(override) if override is not None else default
@@ -14,6 +14,6 @@ def validate_csv(path: Path) -> None:
 
 def save_model(model: object, name: str | Path) -> None:
     SAVED_MODELS_DIR.mkdir(parents=True, exist_ok=True)
-    path = SAVED_MODELS_DIR / resolve_path(name)
+    path = SAVED_MODELS_DIR / Path(name)
     with open(path, "wb") as f:
         pickle.dump(model, f)
