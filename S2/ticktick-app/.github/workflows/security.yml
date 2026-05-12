@@ -1,0 +1,27 @@
+name: Security Scan Job
+
+on:
+  workflow_call:
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install all dependencies for scanning
+        run: npm install
+
+      - name: Run Snyk Security Scanning
+        uses: snyk/actions@master
+        with:
+          args: --all-projects
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
