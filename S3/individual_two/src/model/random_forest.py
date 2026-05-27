@@ -39,6 +39,7 @@ def train_rf(
     roc_auc = roc_auc_score(y_test, y_proba, multi_class="ovr", average="weighted")
     f1_weighted = f1_score(y_test, y_pred, average="weighted", zero_division=0)
     report = classification_report(y_test, y_pred, zero_division=0)
+    
     cm = pd.DataFrame(
         confusion_matrix(y_test, y_pred, labels=model.classes_),
         index=model.classes_,
