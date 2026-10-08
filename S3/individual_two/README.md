@@ -1,3 +1,7 @@
+For Python 3.12+ setup, the current app/server and app/web paths, correct import context, and evaluation links, read the [migraine project guide](PROJECT_GUIDE.md). The original assignment notes below are retained; use the guide for current startup commands.
+
+---
+
 # Individual Two: Migraine Type Prediction
 
 This project is a full-stack migraine classification prototype. The frontend asks a user migraine symptom questions, sends the answers to a FastAPI backend, and the backend uses a trained Random Forest model to predict the migraine type.
