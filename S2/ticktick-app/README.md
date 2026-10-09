@@ -1,3 +1,7 @@
+For the current layout, installation commands, integration scope, and known configuration gaps, read the [TickTick project guide](PROJECT_GUIDE.md). The older setup notes below are retained for reference; their root-install/Cypress instructions do not match a root manifest in this checkout.
+
+---
+
 # Project Setup Guide
 
 ## Prerequisites
